@@ -34,7 +34,12 @@ return [
     */
 
     'connections' => [
-
+        //テスト用のDBはsqliteを使用する為、追加
+        'sqlite_testing' => [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ],
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
@@ -42,6 +47,7 @@ return [
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
+
 
         'mysql' => [
             'driver' => 'mysql',

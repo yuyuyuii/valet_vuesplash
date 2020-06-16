@@ -72,9 +72,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
+      //アプリケーションの起動時にルート定義を読み込むためのクラス
+      //今回はクッキー認証等を行うものなので、webに変更 app/Http/Kernel.phpに定義が記載されている
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+              // ->middleware('api')
+              ->middleware('web')
+              ->namespace($this->namespace)
+              ->group(base_path('routes/api.php'));
     }
 }
