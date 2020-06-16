@@ -4,7 +4,7 @@ const state = {
   user: null
 };
 
-const getter = {};
+const getters = {};
 
 const mutations = {
   setUser(state, user) {// 第一引数は必ずstate
@@ -14,10 +14,18 @@ const mutations = {
 
 const actions = {
     async register(context, data) {
-    const response = await axios.post("/api/register", data)
-        context.commit('setUser', response.data)
-    }
-}
+        const response = await axios.post("/api/register", data);
+        context.commit("setUser", response.data);
+    },
+    async login(context, data) {
+        const response = await axios.post("/api/login", data);
+        context.commit("setUser", response.data);
+    },
+      async logout (context) {
+      const response = await axios.post("/api/logout")
+      context.commit('setUser', null)
+    }    
+};
 /**
  *  まず会員登録APIを呼び出し、返却データを渡して
  *  setUser ミューテーションを実行することで（ここで commit メソッドを使っています）user ステートを更新する
@@ -27,7 +35,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
-  getter,
+  getters,
   mutations,
   actions
 }
