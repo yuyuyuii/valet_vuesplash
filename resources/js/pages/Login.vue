@@ -63,8 +63,14 @@ export default {
     login(){
       console.log(this.loginForm)
     },
-    register(){
-      console.log(this.registerForm);
+    async register(){
+      //authストアのregisterアクションを呼び出す
+      //this.$storeと書くことでストアを参照する事ができる。(stores/index.jsでVue.use(Vuew)と記述したから)
+      console.log(this.$store)
+      await this.$store.dispatch('auth/register', this.registerForm) //dispatch(アクション名, フォームの入力値), これがauth.js/actionsの第二引数となる(state, data)の所
+      //awaitで非同期なアクションが完了するのを待ってからトップページへ移動(Promiseの解決を待ってから)
+      //トップページへ移動
+      this.$router.push('/');
     }
   }
 
