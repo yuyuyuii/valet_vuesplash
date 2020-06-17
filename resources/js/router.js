@@ -6,7 +6,7 @@ import VueRouter from 'vue-router'
 //pages直下のコンポーネントのルーティングを設定する為、インポートする
 import PhotoList from './pages/PhotoList.vue';
 import Login from './pages/Login.vue';
-
+import store from "./store"; 
 //明示的にVueRoterプラグインを使用すると宣言
 //これで<RouterView />コンポーネントを使用できるようになる
 Vue.use(VueRouter);
@@ -19,7 +19,14 @@ const routes = [
   },
   {
     path: "/login",
-    component: Login
+    component: Login,
+    beforeEnter(to, from, next) {
+      if (store.getters['auth/check']) {
+        next('/')
+      } else {
+        next()
+      }
+    },
   }
 ]
 
