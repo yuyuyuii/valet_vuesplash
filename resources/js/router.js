@@ -8,7 +8,7 @@ import PhotoList from './pages/PhotoList.vue';
 import Login from './pages/Login.vue';
 import store from "./store"; 
 import SystemError from "./pages/errors/System.vue";
-
+import PhotoDetail from './pages/PhotoDetail.vue';
 //明示的にVueRoterプラグインを使用すると宣言
 //これで<RouterView />コンポーネントを使用できるようになる
 Vue.use(VueRouter);
@@ -33,6 +33,11 @@ const routes = [
   {
     path: '/500',
     component: SystemError
+  },
+  {
+    path: '/photos/:id',
+    component: PhotoDetail,
+    props: true
   }
 ]
 
