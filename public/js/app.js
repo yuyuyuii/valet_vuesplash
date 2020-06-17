@@ -20578,11 +20578,12 @@ var actions = {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/logout");
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/logout");
 
             case 2:
               response = _context3.sent;
-              context.commit('setUser', null);
+              // const response = await axios.post("/api/logout");
+              context.commit("setUser", null);
 
             case 4:
             case "end":
@@ -20597,7 +20598,7 @@ var actions = {
  *  まず会員登録APIを呼び出し、返却データを渡して
  *  setUser ミューテーションを実行することで（ここで commit メソッドを使っています）user ステートを更新する
   */
-// 「アクション→コミットでミューテーション呼び出し→ステート更新」というパターンはよく使うので慣れれば大丈夫です
+// 「アクション→コミットでミューテーション呼び出し→ステート更新」というパターンはよく使う
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
