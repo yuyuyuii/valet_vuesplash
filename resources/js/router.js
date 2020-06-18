@@ -15,35 +15,42 @@ Vue.use(VueRouter);
 
 //パスとコンポーネントのマッピング
 const routes = [
-  {
-    path: "/", // "/" にアクセスするとPhotoListコンポーネントを描写する
-    component: PhotoList
-  },
-  {
-    path: "/login",
-    component: Login,
-    beforeEnter(to, from, next) {
-      if (store.getters['auth/check']) {
-        next('/')
-      } else {
-        next()
-      }
+    {
+        path: "/", // "/" にアクセスするとPhotoListコンポーネントを描写する
+        component: PhotoList,
+        props: route => {
+            const page = route.query.page;
+            return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 };
+        }
     },
-  },
-  {
-    path: '/500',
-    component: SystemError
-  },
-  {
-    path: '/photos/:id',
-    component: PhotoDetail,
-    props: true
-  }
-]
+    {
+        path: "/login",
+        component: Login,
+        beforeEnter(to, from, next) {
+            if (store.getters["auth/check"]) {
+                next("/");
+            } else {
+                next();
+            }
+        }
+    },
+    {
+        path: "/500",
+        component: SystemError
+    },
+    {
+        path: "/photos/:id",
+        component: PhotoDetail,
+        props: true
+    }
+];
 
 //VueRouterインスタンスを作成する
 const router = new VueRouter({
   mode: "history", //追加する事でURLに # がつかないようになる
+  scrollBehavior() {
+    return {x: 0, y: 0}
+  },
   routes //上で定義したroutes
 })
 

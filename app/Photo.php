@@ -49,6 +49,9 @@ class Photo extends Model
     /** IDの桁数 */
     const ID_LENGTH = 12;
 
+    /**一ページあたりに表示する件数 */
+    protected $perPage = 6;
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
