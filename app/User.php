@@ -24,9 +24,15 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
+    // protected $hidden = [
+    //     'password', 'remember_token',
+    // ];
+
+    //追加。レスポンスとして必要なのは名前だけ。画像のUP主がわかればいいので、
+    protected $visible = [
+      'name'
     ];
+
 
     /**
      * The attributes that should be cast to native types.
@@ -36,4 +42,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * リレーション - photosテーブル
+     * @return \illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function photos()
+    {
+      return $this->hasMany('\App\Photo');
+    }
 }
