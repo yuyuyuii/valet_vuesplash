@@ -9,7 +9,7 @@
     </figure>
     <router-link
       class="photo__overlay"
-      :to="'/photos/${item.id}'"
+      :to="`/photos/${item.id}`"
       :title="'Vuew the photo by ${item.owner.name}'"
     >
     <div class="photo__controls">
@@ -23,7 +23,7 @@
         class="photo__action"
         title="Download photo"
         @click.stop
-        :href="'photos/${item.id}/download'"
+        :href="`photos/${item.id}/download`"
       >
         <i class="icon ion-md-arrow-round-down"></i>
       </a>
