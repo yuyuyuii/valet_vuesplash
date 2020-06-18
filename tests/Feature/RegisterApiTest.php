@@ -9,11 +9,12 @@ use App\User;
 
 class RegisterApiTest extends TestCase
 {
+      use RefreshDatabase;
   /**
    * @test
    */
 
-  public function shoud_新しいユーザーを作成し返却()
+  public function should_新しいユーザーを作成し返却()
   {
     $data = [
       'name' => 'test_user',
