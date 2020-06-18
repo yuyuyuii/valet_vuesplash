@@ -14,7 +14,19 @@ class PhotoController extends Controller
     public function __construct()
     {
         // 認証が必要
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['index']);
+    }
+
+    /**
+     *  写真一覧
+     */
+    public function index()
+    {
+      $photos = Photo::with(['owner'])
+      ->orderBy(Photo::CREATED_AT, 'desc')->pagenate();
+      //withメソッドはリレーションを事前にロードしておく(N+1問題を解決)
+
+      return $photos;
     }
 
     /**
