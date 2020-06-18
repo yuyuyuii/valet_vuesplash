@@ -4,9 +4,45 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 class Photo extends Model
 {
+  /**
+   * リレーションシップ - usersテーブル
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+  public function owner()
+  {
+    return $this->belongsTo('App\User', 'user_id', 'id', 'users');
+  }
+
+  /**
+   * アクセサ - url
+   * @return string
+   */
+
+  public function getUrlAttribute()
+  {
+    //urlメソッドはS3上のファイルの公開URLを返却する
+    return Storage::cloud()->url($this->attributes['filename']);
+  }
+
+  /** JSONに含める属性
+   * 明示的に指定してあげないとレスポンスデータには含まれない
+   */
+  protected $appends = [
+    'url',
+  ];
+
+  /**
+   * Jsonに含める属性で、指定した情報のみJsonデータに含め、レスポンスデータとして返ってくる
+   */
+
+  protected $visible = [
+    'id', 'url', 'owner'
+  ];
+
     /** プライマリキーの型 */
     protected $keyType = 'string';
 

@@ -2087,7 +2087,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _PhotoForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PhotoForm.vue */ "./resources/js/components/PhotoForm.vue");
+/* harmony import */ var _PhotoForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PhotoForm */ "./resources/js/components/PhotoForm.vue");
 //
 //
 //
@@ -2116,7 +2116,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PhotoForm: _PhotoForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    PhotoForm: _PhotoForm__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
@@ -3778,7 +3778,7 @@ var render = function() {
   return _c("div", { staticClass: "loader" }, [
     _c(
       "p",
-      { staticClass: "loading__text" },
+      { staticClass: "loading___text" },
       [_vm._t("default", [_vm._v("Loading...")])],
       2
     ),

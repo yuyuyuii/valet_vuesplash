@@ -19,17 +19,18 @@
         </RouterLink>
       </div>
     </div>
-    <PhotoForm v-model="showForm" />
+    <PhotoForm v-model="showForm"/>
   </nav>
 </template>
 
 <script>
-import PhotoForm from './PhotoForm.vue'
+import PhotoForm from './PhotoForm';
+
 export default {
-  components: {
+  components:{
     PhotoForm
   },
-  data () {
+  data() {
     return {
       showForm: false
     }
