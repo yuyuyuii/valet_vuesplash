@@ -18,6 +18,15 @@ class Photo extends Model
   }
 
   /**
+   * リレーション - commentsテーブル
+   * @return Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function comments()
+  {
+    return $this->hasMany('App\Comment')->orderBy('id', 'desc');
+  }
+  
+  /**
    * アクセサ - url
    * @return string
    */
@@ -40,7 +49,7 @@ class Photo extends Model
    */
 
   protected $visible = [
-    'id', 'url', 'owner'
+    'id', 'url', 'owner', 'comments'
   ];
 
     /** プライマリキーの型 */
