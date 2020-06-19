@@ -12,21 +12,17 @@ class AddCommentApiTest extends TestCase
 {
   use RefreshDatabase;
 
-  /**
-   * @test
-   */
-
     public function setUp(): void
     {
-      parent::setUp();
-      //factoryを使ってテストユーザー作成
-      $this->user = factory(User::class)->create();
+        parent::setUp();
+
+        // テストユーザー作成
+        $this->user = factory(User::class)->create();
     }
     
     /**
      * @test
      */
-
     public function should_コメントを投稿できる()
     {
       //写真データを作成
@@ -42,21 +38,20 @@ class AddCommentApiTest extends TestCase
           'photo' => $photo->id,
         ]), compact('content'));
       // コメントを受け取り
-      $comments = $photo->comment->get();
+      $comments = $photo->comments()->get();
 
       //ステータスコードの確認
-      $this->assertStatus(201)
-      //jsonのフォーマットが期待通りである事
-          ->assertJsonFragment([
-            'autor' => [
-              'name' => $this->user->name,
-            ],
-            'content' => $content
-          ]);
-
-          //DBにコメントが一件登録されている事
-          $this->assertEquals(1, $comment->count());
-          //内容がAPIでリクエストしたものである事
-          $this->assertEquals($content, $comments[0]->content);
+      $response->assertStatus(201)
+            // JSONフォーマットが期待通りであること
+            ->assertJsonFragment([
+                "author" => [
+                    "name" => $this->user->name,
+                ],
+                "content" => $content,
+            ]);
+        // DBにコメントが1件登録されていること
+        $this->assertEquals(1, $comments->count());
+        // 内容がAPIでリクエストしたものであること
+        $this->assertEquals($content, $comments[0]->content);
     }
 }
