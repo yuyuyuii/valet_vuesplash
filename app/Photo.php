@@ -5,9 +5,22 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class Photo extends Model
 {
+  /**
+   * リレーション - likesテーブル中間テーブルとなる
+   * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+   */
+  public function likes()
+  {
+    return $this->belongsToMany('App\User', 'likes')->withTimestamps();
+    // 外部キーしかないモデルクラスは作成する必要がない
+    // withTimestampsはcreated_atとupdated_atを更新するための指定
+  }
+
+
   /**
    * リレーションシップ - usersテーブル
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -17,6 +30,15 @@ class Photo extends Model
     return $this->belongsTo('App\User', 'user_id', 'id', 'users');
   }
 
+  /**
+   * リレーション - commentsテーブル
+   * @return Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function comments()
+  {
+    return $this->hasMany('App\Comment')->orderBy('id', 'desc');
+  }
+  
   /**
    * アクセサ - url
    * @return string
@@ -28,19 +50,42 @@ class Photo extends Model
     return Storage::cloud()->url($this->attributes['filename']);
   }
 
+  /**
+   * アクセサ likes_count
+   * @return int
+   */
+  public function getLikesCountAttribute()
+  {
+    return $this->likes->count();
+  }
+
+  /**
+   * アクセサ liked_by_user
+   * @return boolean
+   */
+  public function getLikedByUserAttribute()
+  {
+    if(Auth::guest()){
+      return false;
+    }
+    return $this->likes->contains(function ($user){
+      return $user->id === Auth::user()->id;
+    });
+  }
+
+
   /** JSONに含める属性
    * 明示的に指定してあげないとレスポンスデータには含まれない
    */
   protected $appends = [
-    'url',
+    'url','likes_count', 'liked_by_user'
   ];
 
   /**
    * Jsonに含める属性で、指定した情報のみJsonデータに含め、レスポンスデータとして返ってくる
    */
-
   protected $visible = [
-    'id', 'url', 'owner'
+    'id', 'url', 'owner', 'comments', 'likes_count', 'liked_by_user'
   ];
 
     /** プライマリキーの型 */
