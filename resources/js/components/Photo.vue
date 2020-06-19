@@ -9,21 +9,23 @@
     </figure>
     <router-link
       class="photo__overlay"
-      :to="'/photos/${item.id}'"
+      :to="`/photos/${item.id}`"
       :title="'Vuew the photo by ${item.owner.name}'"
     >
     <div class="photo__controls">
       <button
         class="photo__action photo__action--like"
+        :class="{'photo__action--liked': item.liked_by_user}"
         title="Like Photo"
+        @click.prevent="like"
       >
-        <i class="icon ion-md-heart"></i>12
+        <i class="icon ion-md-heart"></i>{{ item.likes_count }}
       </button>
       <a 
         class="photo__action"
         title="Download photo"
         @click.stop
-        :href="'photos/${item.id}/download'"
+        :href="`photos/${item.id}/download`"
       >
         <i class="icon ion-md-arrow-round-down"></i>
       </a>
@@ -42,6 +44,14 @@ export default {
       type: Object,
       required: true
     }
-  }
+  },
+  methods: {
+    like () {
+      this.$emit('like', {
+        id: this.item.id,
+        liked: this.item.liked_by_user
+      })
+    }
+  },
 }
 </script>
